@@ -16,5 +16,4 @@ public class VendasController {
     public List<Venda> getVendas() { // Is DTO required?
         return vendasService.getVendas();
     }
-
 }
