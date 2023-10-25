@@ -48,7 +48,7 @@ jobs:
         key: ${{ secrets.KEY_TEST }}
         port: 22
         script: |
-          docker stop partida-aula
-          docker rm --force partida-aula
-          docker run  -e MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} -d -p 8080:8080 --name partida-aula gustavoantony/vendaapi:${{ github.sha }}
+          docker stop vendaapi
+          docker rm --force vendaapi
+          docker run  -e MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} -d -p 8080:8080 --name vendaapi gustavoantony/vendaapi:${{ github.sha }}
           
