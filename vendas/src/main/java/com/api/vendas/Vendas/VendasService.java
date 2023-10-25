@@ -1,7 +1,10 @@
 package com.api.vendas.Vendas;
 
+import com.api.vendas.Vendas.exception.ImovelNotDFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -23,6 +26,26 @@ public class VendasService {
     }
     public List<Venda> getVendasByUserCpf(String userCpf) {
         return vendasRepository.findByLocatorCpf(userCpf);
+    }
+
+
+    public Venda postVenda(String imovelIdentifier, String corretorIdentifier, String clienteIdentifier){
+
+        Venda venda = new Venda();
+
+       RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<ImoveisDTO> responseImoveis =
+                restTemplate.getForEntity("http://localhost:8080/imevoeis/" + imovelIdentifier, ImoveisDTO.class);
+        if (!responseImoveis.getStatusCode().is2xxSuccessful()) {
+            throw new ImovelNotDFoundException();
+        }
+
+        venda.setImovelIdentifier(responseImoveis.getImovelIdentifier());
+
+
+        return vendasRepository.save(venda);
+
     }
 
 }
