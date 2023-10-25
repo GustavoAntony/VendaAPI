@@ -7,7 +7,7 @@ import java.util.List;
 
 @Repository
 public interface VendasRepository extends MongoRepository<Venda, String> {
-    List<Venda> findByLocatorCpf(String locatorCpf);
-    List<Venda> findByUserCpf(String userCpf);
-    List<Venda> findByPropertyIdentifier(String propertyIdentifier);
+    List<Venda> findByCpfCliente(String cilenteCpf);
+    List<Venda> findByCpfCorretor(String corretorCpf);
+    List<Venda> findByVendaStatus(String status);
 }

@@ -17,4 +17,5 @@ public class Venda {
     private String cpfCorretor;
     private String vendaStatus;
 
+
 }
