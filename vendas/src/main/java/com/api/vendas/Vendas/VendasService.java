@@ -35,13 +35,31 @@ public class VendasService {
 
        RestTemplate restTemplate = new RestTemplate();
 
+        venda.setVendaStatus("SUCESSO");
+
         ResponseEntity<ImoveisDTO> responseImoveis =
                 restTemplate.getForEntity("http://localhost:8080/imevoeis/" + imovelIdentifier, ImoveisDTO.class);
         if (!responseImoveis.getStatusCode().is2xxSuccessful()) {
+            venda.setVendaStatus("ERRO");
             throw new ImovelNotFoundException();
         }
 
-        venda.setImovelIdentifier(responseImoveis.getImovelIdentifier());
+        venda.setImovelIdentifier(responseImoveis.getBody().getIdentifier());
+
+        ResponseEntity<CorretorDTO> responseCorretor =
+                restTemplate.getForEntity("http://localhost:8080/corretor/" + corretorIdentifier, CorretorDTO.class);
+        if (!responseCorretor.getStatusCode().is2xxSuccessful()) {
+            venda.setVendaStatus("ERRO");
+        }
+
+        venda.setCpfCorretor(responseCorretor.getCpfCorretor());
+
+        ResponseEntity<ClienteDTO> responseCliente =
+                restTemplate.getForEntity("http://localhost:8080/cliente/" + clienteIdentifier, ClienteDTO.class);
+        if(! responseCliente.getStatusCode().is2xxSuccessful()){
+            venda.setVendaStatus("ERRO");
+        }
+        venda.setCpfCliente(responseCliente.getCpfCliente());
 
 
         return vendasRepository.save(venda);
