@@ -1,6 +1,6 @@
 package com.api.vendas.Vendas;
 
-import com.api.vendas.Vendas.exception.ImovelNotDFoundException;
+import com.api.vendas.Vendas.exception.ImovelNotFoundException;
 import com.api.vendas.common.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class VendasControllerAdvice {
 
-    @ExceptionHandler(ImovelNotDFoundException.class)
+    @ExceptionHandler(ImovelNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorDTO imovelNotFoundException (ImovelNotDFoundException ex){
+    public ErrorDTO imovelNotFoundException (ImovelNotFoundException ex){
 
         ErrorDTO errorDTO =  new ErrorDTO();
 

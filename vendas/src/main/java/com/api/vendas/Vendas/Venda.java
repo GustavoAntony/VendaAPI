@@ -16,4 +16,5 @@ public class Venda {
     private String cpfCliente;
     private String cpfCorretor;
     private String vendaStatus;
+
 }
