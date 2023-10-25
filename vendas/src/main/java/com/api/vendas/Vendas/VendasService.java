@@ -1,6 +1,6 @@
 package com.api.vendas.Vendas;
 
-import com.api.vendas.Vendas.exception.ImovelNotDFoundException;
+import com.api.vendas.Vendas.exception.ImovelNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class VendasService {
         ResponseEntity<ImoveisDTO> responseImoveis =
                 restTemplate.getForEntity("http://localhost:8080/imevoeis/" + imovelIdentifier, ImoveisDTO.class);
         if (!responseImoveis.getStatusCode().is2xxSuccessful()) {
-            throw new ImovelNotDFoundException();
+            throw new ImovelNotFoundException();
         }
 
         venda.setImovelIdentifier(responseImoveis.getImovelIdentifier());
