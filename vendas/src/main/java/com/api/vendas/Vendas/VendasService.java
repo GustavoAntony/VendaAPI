@@ -1,6 +1,6 @@
 package com.api.vendas.Vendas;
 
-import com.api.vendas.Vendas.exception.ImovelNotDFoundException;
+import com.api.vendas.Vendas.exception.ImovelNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,31 +17,51 @@ public class VendasService {
         return vendasRepository.findAll();
     }
 
-    public List<Venda> getVendasByPropertyIdentifier(String pid) {
-        return vendasRepository.findByPropertyIdentifier(pid);
-    }
-
-    public List<Venda> getVendasByLocatorCpf(String locatorCpf) {
-        return vendasRepository.findByLocatorCpf(locatorCpf);
-    }
-    public List<Venda> getVendasByUserCpf(String userCpf) {
-        return vendasRepository.findByLocatorCpf(userCpf);
-    }
 
 
-    public Venda postVenda(String imovelIdentifier, String corretorIdentifier, String clienteIdentifier){
+    public List<Venda> getVendasByCpfCorretor(String corretorCpf) {
+        return vendasRepository.findByCpfCorretor(corretorCpf);
+    }
+    public List<Venda> getVendasByCpfCliente(String clienteCpf) {
+        return vendasRepository.findByCpfCliente(clienteCpf);
+    }
+
+    public List<Venda> getVendasByStatus(String status) {
+        return vendasRepository.findByVendaStatus(status);
+    }
+
+
+    public Venda postVenda(VendaCreateDTO vendaCreateDTO){
 
         Venda venda = new Venda();
 
        RestTemplate restTemplate = new RestTemplate();
 
+        venda.setVendaStatus("SUCESSO");
+
         ResponseEntity<ImoveisDTO> responseImoveis =
-                restTemplate.getForEntity("http://localhost:8080/imevoeis/" + imovelIdentifier, ImoveisDTO.class);
+                restTemplate.getForEntity("http://localhost:8081/imoveis/" + vendaCreateDTO.getIdenifierImovel(), ImoveisDTO.class);
         if (!responseImoveis.getStatusCode().is2xxSuccessful()) {
-            throw new ImovelNotDFoundException();
+            venda.setVendaStatus("ERRO");
+            throw new ImovelNotFoundException();
         }
 
-        venda.setImovelIdentifier(responseImoveis.getImovelIdentifier());
+        venda.setImovelIdentifier(responseImoveis.getBody().getIdentifier());
+
+        ResponseEntity<CorretorDTO> responseCorretor =
+                restTemplate.getForEntity("http://localhost:8081/corretor/cpf/" + vendaCreateDTO.getCpfCorretor(), CorretorDTO.class);
+        if (!responseCorretor.getStatusCode().is2xxSuccessful()) {
+            venda.setVendaStatus("ERRO");
+        }
+
+        venda.setCpfCorretor(responseCorretor.getBody().getCpf());
+
+        ResponseEntity<ClienteDTO> responseCliente =
+                restTemplate.getForEntity("http://localhost:8081/cliente/" + vendaCreateDTO.getCpfCliente(), ClienteDTO.class);
+        if(! responseCliente.getStatusCode().is2xxSuccessful()){
+            venda.setVendaStatus("ERRO");
+        }
+        venda.setCpfCliente(responseCliente.getBody().getCpf());
 
 
         return vendasRepository.save(venda);

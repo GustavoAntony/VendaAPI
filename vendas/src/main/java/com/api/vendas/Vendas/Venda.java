@@ -14,6 +14,8 @@ public class Venda {
     private String id;
     private String imovelIdentifier;
     private String cpfCliente;
-    private String cpfCorretot;
-    private String imovelStatus;
+    private String cpfCorretor;
+    private String vendaStatus;
+
+
 }
