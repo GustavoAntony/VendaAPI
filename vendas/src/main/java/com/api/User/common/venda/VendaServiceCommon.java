@@ -10,10 +10,17 @@ public class VendaServiceCommon {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<ReturnUserDTO> response = restTemplate.getForEntity("54.71.150.144:8082/token/" + token, ReturnUserDTO.class);
+        try {
+            ResponseEntity<ReturnUserDTO> response = restTemplate.getForEntity("http://54.71.150.144:8082/token/" + token, ReturnUserDTO.class);
 
-        if (!response.getStatusCode().is2xxSuccessful()){
-            throw new RuntimeException("User not found");
+            // Se a resposta não for bem-sucedida, lance uma exceção indicando token inválido
+            if (!response.getStatusCode().is2xxSuccessful()){
+                throw new RuntimeException("Invalid token or user not found");
+            }
+        } catch (Exception e) {
+            // Trate quaisquer outras exceções (como erros de rede) lançando uma exceção em tempo de execução
+            throw new RuntimeException("Error validating token: " + e.getMessage());
         }
     }
+
 }

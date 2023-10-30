@@ -14,6 +14,7 @@ public class VendasService {
     private VendasRepository vendasRepository;
 
     public List<Venda> getVendas() {
+
         return vendasRepository.findAll();
     }
 
