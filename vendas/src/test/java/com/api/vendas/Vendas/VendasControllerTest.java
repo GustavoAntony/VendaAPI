@@ -1,4 +1,4 @@
-
+package com.api.vendas.Vendas;
 
 import com.api.vendas.Vendas.Venda;
 import com.api.vendas.Vendas.VendasController;
@@ -61,8 +61,49 @@ public class VendasControllerTest {
 
     }
 
+    @Test
+    void test_listVendasByPropertyIdentifier_UmaVenda() throws Exception {
 
+        Venda venda = new Venda();
+        venda.setPropertyIdentifier("123");
 
+        List<Venda> vendas = new ArrayList<>();
+        vendas.add(venda);
 
+        Mockito.when(vendasService.getVendasByPropertyIdentifier("123")).thenReturn(vendas);
+
+        MvcResult result = mockMvc
+                .perform(MockMvcRequestBuilders.get("/vendas/123"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        ObjectMapper om = new ObjectMapper();
+
+        String resp = result.getResponse().getContentAsString();
+        Assertions.assertEquals(om.writeValueAsString(vendas), resp);
+
+    }
+
+    @Test
+    void test_listVendasByLocatorCpf_UmaVenda() throws Exception {
+
+        Venda venda = new Venda();
+        String locatorCpf = venda.getLocatorCpf();
+
+        List<Venda> vendas = new ArrayList<>();
+        vendas.add(venda);
+
+        Mockito.when(vendasService.getVendasByLocatorCpf(locatorCpf)).thenReturn(vendas);
+
+        MvcResult result = mockMvc
+                .perform(MockMvcRequestBuilders.get("/Locator/"+locatorCpf))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        ObjectMapper om = new ObjectMapper();
+
+        String resp = result.getResponse().getContentAsString();
+        Assertions.assertEquals(om.writeValueAsString(vendas), resp);
+    }
 
 }
