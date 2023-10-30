@@ -73,7 +73,8 @@ public class VendasControllerTest {
         Mockito.when(vendasService.getVendasByPropertyIdentifier("123")).thenReturn(vendas);
 
         MvcResult result = mockMvc
-                .perform(MockMvcRequestBuilders.get("/vendas/123"))
+                .perform(MockMvcRequestBuilders.get("/vendas/123")
+                .param("propertyIdentifier", "123"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
