@@ -10,7 +10,4 @@ public class ImoveisDTO {
 
     private String identifier;
 
-    private  String endereco;
-
-    private double preco;
 }
