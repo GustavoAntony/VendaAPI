@@ -49,7 +49,7 @@ public class VendasService {
         venda.setImovelIdentifier(responseImoveis.getBody().getIdentifier());
 
         ResponseEntity<CorretorDTO> responseCorretor =
-                restTemplate.getForEntity("http://localhost:8081/corretor/" + vendaCreateDTO.getCpfCorretor(), CorretorDTO.class);
+                restTemplate.getForEntity("http://localhost:8081/corretor/cpf/" + vendaCreateDTO.getCpfCorretor(), CorretorDTO.class);
         if (!responseCorretor.getStatusCode().is2xxSuccessful()) {
             venda.setVendaStatus("ERRO");
         }
