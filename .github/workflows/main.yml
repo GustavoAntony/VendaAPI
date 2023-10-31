@@ -43,11 +43,11 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
-        context: .
+        context: ./vendas  # Ajuste o contexto para vendas
         file: ./vendas/Dockerfile
         push: true
         tags: gustavoantony/vendaapi:${{ github.sha }}
-        working-directory: vendas
+
         
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
