@@ -1,6 +1,5 @@
 package com.api.vendas.Vendas;
 
-import com.api.vendas.Vendas.exception.VendaNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +8,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/vendas")
 public class VendasController {
+
     @Autowired
     private VendasService vendasService;
 
@@ -41,7 +41,10 @@ public class VendasController {
     @GetMapping
     @RequestMapping("/status")
     public List<Venda> getVendasByStatus(@RequestParam String status, @RequestHeader String token) { // Is DTO required?
-        return vendasService.getVendasByStatus(status);
+
+            return vendasService.getVendasByStatus(status);
+
+
     }
 
 

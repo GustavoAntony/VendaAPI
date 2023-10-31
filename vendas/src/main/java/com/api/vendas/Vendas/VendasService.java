@@ -14,6 +14,7 @@ public class VendasService {
     private VendasRepository vendasRepository;
 
     public List<Venda> getVendas() {
+
         return vendasRepository.findAll();
     }
 
@@ -27,6 +28,9 @@ public class VendasService {
     }
 
     public List<Venda> getVendasByStatus(String status) {
+
+
+
         return vendasRepository.findByVendaStatus(status);
     }
 
