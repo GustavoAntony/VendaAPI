@@ -1,6 +1,7 @@
 package com.api.User.user;
 
 import com.api.User.user.dto.ReturnUserDTO;
+import com.api.User.user.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -13,7 +14,7 @@ public class LoginService {
     public ReturnUserDTO get(String token){
         ReturnUserDTO user = get(token);
         if(user == null){
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException();
         }
 
         return user;
