@@ -1,4 +1,4 @@
-package com.api.User.user.dto;
+package com.api.vendas.User.user.dto;
 
 
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.api.User.common;
+package com.api.vendas.User.common;
 
 import lombok.Getter;
 import lombok.Setter;
