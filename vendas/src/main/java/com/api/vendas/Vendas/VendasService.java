@@ -28,6 +28,9 @@ public class VendasService {
     }
 
     public List<Venda> getVendasByStatus(String status) {
+
+
+
         return vendasRepository.findByVendaStatus(status);
     }
 
