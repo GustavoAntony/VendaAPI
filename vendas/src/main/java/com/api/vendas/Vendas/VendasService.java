@@ -16,7 +16,6 @@ public class VendasService {
     @Autowired
     private VendasRepository vendasRepository;
 
-    RestTemplate restTemplate = new RestTemplate();
     public List<Venda> getVendas() {
 
         return vendasRepository.findAll();

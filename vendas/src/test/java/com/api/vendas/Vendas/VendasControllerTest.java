@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -48,10 +49,13 @@ public class VendasControllerTest {
         List<Venda> vendas = new ArrayList<>();
         vendas.add(venda);
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("token","KXtyXGSk1mjD3VGst9ia");
         Mockito.when(vendasService.getVendas()).thenReturn(vendas);
 
         MvcResult result = mockMvc
-                .perform(MockMvcRequestBuilders.get("/vendas"))
+                .perform(MockMvcRequestBuilders.get("/vendas")
+                        .headers(headers))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
@@ -70,11 +74,12 @@ public class VendasControllerTest {
 
         List<Venda> vendas = new ArrayList<>();
         vendas.add(venda);
-
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("token","KXtyXGSk1mjD3VGst9ia");
         Mockito.when(vendasService.getVendasByStatus("VENDIDO")).thenReturn(vendas);
 
         MvcResult result = mockMvc
-                .perform(MockMvcRequestBuilders.get("/vendas/status")
+                .perform(MockMvcRequestBuilders.get("/vendas/status").headers(headers)
                 .param("status", "VENDIDO"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
@@ -94,11 +99,13 @@ public class VendasControllerTest {
 
         List<Venda> vendas = new ArrayList<>();
         vendas.add(venda);
-
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("token","KXtyXGSk1mjD3VGst9ia");
         Mockito.when(vendasService.getVendasByCpfCorretor("1234")).thenReturn(vendas);
 
         MvcResult result = mockMvc
-                .perform(MockMvcRequestBuilders.get("/vendas/corretor").param("corretorCpf", "1234"))
+                .perform(MockMvcRequestBuilders.get("/vendas/corretor").headers(headers)
+                        .param("corretorCpf", "1234"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
@@ -116,11 +123,13 @@ public class VendasControllerTest {
 
         List<Venda> vendas = new ArrayList<>();
         vendas.add(venda);
-
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("token","KXtyXGSk1mjD3VGst9ia");
         Mockito.when(vendasService.getVendasByCpfCliente("1234")).thenReturn(vendas);
 
         MvcResult result = mockMvc
-                .perform(MockMvcRequestBuilders.get("/vendas/cliente").param("clienteCpf", "1234"))
+                .perform(MockMvcRequestBuilders.get("/vendas/cliente").headers(headers)
+                        .param("clienteCpf", "1234"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
@@ -142,7 +151,8 @@ public class VendasControllerTest {
         venda2.setImovelIdentifier("3");
         venda2.setVendaStatus("SUCESSO");
 
-
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("token","KXtyXGSk1mjD3VGst9ia");
 
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(venda);
@@ -150,7 +160,7 @@ public class VendasControllerTest {
         Mockito.when(vendasService.postVenda(ArgumentMatchers.eq(venda))).thenReturn(venda2);
 
         MvcResult result = mockMvc
-                .perform(MockMvcRequestBuilders.post("/vendas")
+                .perform(MockMvcRequestBuilders.post("/vendas").headers(headers)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                         //.characterEncoding("utf-8"))
