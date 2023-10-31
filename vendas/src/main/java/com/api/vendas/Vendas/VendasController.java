@@ -1,6 +1,5 @@
 package com.api.vendas.Vendas;
 
-import com.api.vendas.Vendas.exception.VendaNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,12 +8,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/vendas")
 public class VendasController {
+
     @Autowired
     private VendasService vendasService;
-    @GetMapping()
-    public List<Venda> getVendas() { // Is DTO required?
+
+    @GetMapping
+    public List<Venda> getVendas(@RequestHeader String token) { // Is DTO required?
         return vendasService.getVendas();
     }
+
 //    @RequestMapping("/{PropertyId}")
 //    public List<Venda> getVendasByPropertyId(@RequestParam String propertyId) { // Is DTO required?
 //        List<Venda> vendas = vendasService.getVendasByPropertyIdentifier(propertyId);
@@ -23,23 +25,31 @@ public class VendasController {
 //        }
 //        return vendas;
 //    }
+
+    @GetMapping
     @RequestMapping("/corretor")
-    public List<Venda> getVendasByCorretorCpf(@RequestParam String corretorCpf) { // Is DTO required?
+    public List<Venda> getVendasByCorretorCpf(@RequestParam String corretorCpf, @RequestHeader String token) { // Is DTO required?
         return vendasService.getVendasByCpfCorretor(corretorCpf);
     }
+
+    @GetMapping
     @RequestMapping("/cliente")
-    public List<Venda> getVendasByClienteCpf(@RequestParam String clienteCpf) { // Is DTO required?
+    public List<Venda> getVendasByClienteCpf(@RequestParam String clienteCpf, @RequestHeader String token) { // Is DTO required?
         return vendasService.getVendasByCpfCliente(clienteCpf);
     }
 
+    @GetMapping
     @RequestMapping("/status")
-    public List<Venda> getVendasByStatus(@RequestParam String status) { // Is DTO required?
-        return vendasService.getVendasByStatus(status);
+    public List<Venda> getVendasByStatus(@RequestParam String status, @RequestHeader String token) { // Is DTO required?
+
+            return vendasService.getVendasByStatus(status);
+
+
     }
 
 
     @PostMapping
-    public Venda criaVenda (@RequestBody VendaCreateDTO venda){
+    public Venda criaVenda (@RequestBody VendaCreateDTO venda, @RequestHeader String token){
         return vendasService.postVenda(venda);
     }
 

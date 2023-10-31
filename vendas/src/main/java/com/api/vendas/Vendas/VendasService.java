@@ -10,11 +10,15 @@ import java.util.List;
 
 @Service
 public class VendasService {
+
+    @Autowired
+    private RestTemplate restTemplate;
     @Autowired
     private VendasRepository vendasRepository;
 
     RestTemplate restTemplate = new RestTemplate();
     public List<Venda> getVendas() {
+
         return vendasRepository.findAll();
     }
 
@@ -28,6 +32,9 @@ public class VendasService {
     }
 
     public List<Venda> getVendasByStatus(String status) {
+
+
+
         return vendasRepository.findByVendaStatus(status);
     }
 
@@ -35,8 +42,6 @@ public class VendasService {
     public Venda postVenda(VendaCreateDTO vendaCreateDTO){
 
         Venda venda = new Venda();
-
-       RestTemplate restTemplate = new RestTemplate();
 
         venda.setVendaStatus("SUCESSO");
 
