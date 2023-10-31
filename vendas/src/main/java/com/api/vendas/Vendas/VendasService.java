@@ -13,10 +13,14 @@ import java.util.List;
 
 @Service
 public class VendasService {
+
+    @Autowired
+    private RestTemplate restTemplate;
     @Autowired
     private VendasRepository vendasRepository;
 
     public List<Venda> getVendas() {
+
         return vendasRepository.findAll();
     }
 
@@ -30,6 +34,9 @@ public class VendasService {
     }
 
     public List<Venda> getVendasByStatus(String status) {
+
+
+
         return vendasRepository.findByVendaStatus(status);
     }
 
