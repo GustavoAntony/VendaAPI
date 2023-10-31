@@ -1,5 +1,6 @@
 package com.api.User.user;
 
+import com.api.User.user.exception.TokenNotPassedException;
 import com.api.User.user.exception.UserNotFoundException;
 import com.api.User.common.ErrorDTO;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,17 @@ public class UserControllerAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDTO userNotFoundException(UserNotFoundException ex) {
+        ErrorDTO error = new ErrorDTO();
+        error.setMessage(ex.getMessage());
+        error.setCode(401);
+        error.setTime(LocalDateTime.now());
+        return error;
+    }
+
+    @ExceptionHandler(TokenNotPassedException.class)
+    @ResponseBody
+    @ResponseStatus
+    public ErrorDTO tokenNotPassedException(TokenNotPassedException ex){
         ErrorDTO error = new ErrorDTO();
         error.setMessage(ex.getMessage());
         error.setCode(400);
