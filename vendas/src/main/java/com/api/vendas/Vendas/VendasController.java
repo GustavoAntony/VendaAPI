@@ -50,7 +50,7 @@ public class VendasController {
 
     @PostMapping
     public Venda criaVenda (@RequestBody VendaCreateDTO venda, @RequestHeader (name = "token") String token){
-        return vendasService.postVenda(venda);
+        return vendasService.postVenda(venda, token);
     }
 
 
