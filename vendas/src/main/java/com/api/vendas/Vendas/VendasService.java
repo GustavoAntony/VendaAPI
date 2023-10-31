@@ -2,6 +2,9 @@ package com.api.vendas.Vendas;
 
 import com.api.vendas.Vendas.exception.ImovelNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -31,16 +34,20 @@ public class VendasService {
     }
 
 
-    public Venda postVenda(VendaCreateDTO vendaCreateDTO){
+    public Venda postVenda(VendaCreateDTO vendaCreateDTO, String token){
 
         Venda venda = new Venda();
+        RestTemplate restTemplate = new RestTemplate();
 
-       RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("token", token);
+
+        HttpEntity<String> entity  = new HttpEntity<>(headers);
 
         venda.setVendaStatus("SUCESSO");
 
-        ResponseEntity<ImoveisDTO> responseImoveis =
-                restTemplate.getForEntity("http://localhost:8081/imoveis/" + vendaCreateDTO.getIdenifierImovel(), ImoveisDTO.class);
+
+        ResponseEntity<ImoveisDTO> responseImoveis =  restTemplate.getForEntity("http://localhost:8081/imoveis/" + vendaCreateDTO.getIdenifierImovel(), ImoveisDTO.class);
         if (!responseImoveis.getStatusCode().is2xxSuccessful()) {
             venda.setVendaStatus("ERRO");
             throw new ImovelNotFoundException();
@@ -55,6 +62,7 @@ public class VendasService {
         }
 
         venda.setCpfCorretor(responseCorretor.getBody().getCpf());
+
 
         ResponseEntity<ClienteDTO> responseCliente =
                 restTemplate.getForEntity("http://localhost:8081/cliente/" + vendaCreateDTO.getCpfCliente(), ClienteDTO.class);
