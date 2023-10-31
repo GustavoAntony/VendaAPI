@@ -10,6 +10,9 @@ import java.util.List;
 
 @Service
 public class VendasService {
+
+    @Autowired
+    private RestTemplate restTemplate;
     @Autowired
     private VendasRepository vendasRepository;
 
@@ -38,8 +41,6 @@ public class VendasService {
     public Venda postVenda(VendaCreateDTO vendaCreateDTO){
 
         Venda venda = new Venda();
-
-       RestTemplate restTemplate = new RestTemplate();
 
         venda.setVendaStatus("SUCESSO");
 
