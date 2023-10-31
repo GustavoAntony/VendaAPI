@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-
 @Service
 public class VendasService {
+    @Autowired
+    private RestTemplate restTemplate;
     @Autowired
     private VendasRepository vendasRepository;
 
@@ -35,12 +36,10 @@ public class VendasService {
 
         Venda venda = new Venda();
 
-       RestTemplate restTemplate = new RestTemplate();
-
         venda.setVendaStatus("SUCESSO");
 
         ResponseEntity<ImoveisDTO> responseImoveis =
-                restTemplate.getForEntity("http://localhost:8081/imoveis/" + vendaCreateDTO.getIdenifierImovel(), ImoveisDTO.class);
+                restTemplate.getForEntity("http://localhost:8081/imoveis/" + vendaCreateDTO.getIdentifierImovel(), ImoveisDTO.class);
         if (!responseImoveis.getStatusCode().is2xxSuccessful()) {
             venda.setVendaStatus("ERRO");
             throw new ImovelNotFoundException();
@@ -62,8 +61,6 @@ public class VendasService {
             venda.setVendaStatus("ERRO");
         }
         venda.setCpfCliente(responseCliente.getBody().getCpf());
-
-
         return vendasRepository.save(venda);
 
     }
