@@ -1,8 +1,8 @@
-package com.api.User.user;
+package com.api.vendas.User.user;
 
-import com.api.User.user.exception.TokenNotPassedException;
-import com.api.User.user.exception.UserNotFoundException;
-import com.api.User.common.ErrorDTO;
+import com.api.vendas.User.user.exception.TokenNotPassedException;
+import com.api.vendas.User.user.exception.UserNotFoundException;
+import com.api.vendas.User.common.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
