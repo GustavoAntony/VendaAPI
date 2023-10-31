@@ -20,8 +20,6 @@ public class LoginFilter implements Filter {
     @Override
     public void doFilter (ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException{
             String token = ((HttpServletRequest) request).getHeader("token");
-            String uri = ((HttpServletRequest) request).getRequestURI();
-            String method = ((HttpServletRequest) request).getMethod();
 
             vendaServiceCommon.validarUsuario(token);
 
