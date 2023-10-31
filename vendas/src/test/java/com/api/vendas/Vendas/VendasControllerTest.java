@@ -38,7 +38,7 @@ public class VendasControllerTest {
     }
 
     @Test
-    void test_listVendas_UmaVenda() throws Exception {
+    void test_listVendas_UmaVenda() throws Exception{
 
         Venda venda = new Venda();
 
