@@ -6,6 +6,7 @@ C:\Users\Gustavin\VendaAPI\vendas\src\main\java\com\api\vendas\Vendas\exception\
 C:\Users\Gustavin\VendaAPI\vendas\src\main\java\com\api\vendas\Vendas\VendasRepository.java
 C:\Users\Gustavin\VendaAPI\vendas\src\main\java\com\api\vendas\Vendas\VendasService.java
 C:\Users\Gustavin\VendaAPI\vendas\src\main\java\com\api\vendas\User\user\exception\TokenNotPassedException.java
+C:\Users\Gustavin\VendaAPI\vendas\src\main\java\com\api\vendas\common\AppConfig.java
 C:\Users\Gustavin\VendaAPI\vendas\src\main\java\com\api\vendas\User\common\WebSecurityConfig.java
 C:\Users\Gustavin\VendaAPI\vendas\src\main\java\com\api\vendas\User\user\UserControllerAdvice.java
 C:\Users\Gustavin\VendaAPI\vendas\src\main\java\com\api\vendas\Vendas\ClienteDTO.java
