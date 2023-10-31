@@ -42,7 +42,7 @@ public class VendasControllerTest {
     }
 
     @Test
-    void test_listVendas_UmaVenda() throws Exception{
+    void test_listVendas() throws Exception{
 
         Venda venda = new Venda();
 
@@ -64,7 +64,7 @@ public class VendasControllerTest {
     }
 
     @Test
-    void test_listVendasByPropertyIdentifier_UmaVenda() throws Exception {
+    void test_listVendasByPropertyIdentifier() throws Exception {
 
         Venda venda = new Venda();
         venda.setVendaStatus("VENDIDO");
@@ -88,7 +88,7 @@ public class VendasControllerTest {
     }
 
     @Test
-    void test_listVendasByCorretorCpf_UmaVenda() throws Exception {
+    void test_listVendasByCorretorCpf() throws Exception {
 
         Venda venda = new Venda();
         venda.setCpfCorretor("1234");
@@ -110,7 +110,7 @@ public class VendasControllerTest {
     }
 
     @Test
-    void test_listVendasByClienteCpf_UmaVenda() throws Exception {
+    void test_listVendasByClienteCpf() throws Exception {
 
         Venda venda = new Venda();
         venda.setCpfCliente("1234");
