@@ -8,6 +8,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.mockito.ArgumentMatchers.*;
 
@@ -22,7 +25,7 @@ public class VendasServiceTests {
 
     @Mock
     VendasRepository vendasRepository;
-
+    @Autowired
     @Mock
     RestTemplate restTemplate;
 
