@@ -49,8 +49,8 @@ import java.util.List;
 
 
     @PostMapping
-    public Venda criaVenda (@RequestBody VendaCreateDTO venda, @RequestHeader String token){
-<span class="nc" id="L53">        return vendasService.postVenda(venda);</span>
+    public Venda criaVenda (@RequestBody VendaCreateDTO venda, @RequestHeader (name = &quot;token&quot;) String token){
+<span class="nc" id="L53">        return vendasService.postVenda(venda, token);</span>
     }
 
 

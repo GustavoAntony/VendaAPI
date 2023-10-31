@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -92,12 +93,18 @@ public class VendasServiceTests {
         clienteDTO.setCpf("321");
         Venda venda = create_venda();
 
-        Mockito.lenient().when(restTemplate.getForEntity("http://localhost:8081/imoveis/1", ImoveisDTO.class)).thenReturn(new ResponseEntity<>(imoveisDTO, HttpStatus.OK));
-        Mockito.lenient().when(restTemplate.getForEntity("http://localhost:8081/corretor/cpf/123", CorretorDTO.class)).thenReturn(new ResponseEntity<>(corretorDTO, HttpStatus.OK));
-        Mockito.lenient().when(restTemplate.getForEntity("http://localhost:8081/cliente/321", ClienteDTO.class)).thenReturn(new ResponseEntity<>(clienteDTO,HttpStatus.OK));
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add("token", "100");
+
+        HttpEntity httpEntity = new HttpEntity<>(headers);
+
+        Mockito.lenient().when(restTemplate.exchange("http://localhost:8081/imoveis/1", HttpMethod.GET,httpEntity, ImoveisDTO.class)).thenReturn(new ResponseEntity<>(imoveisDTO, HttpStatus.OK));
+        Mockito.lenient().when(restTemplate.exchange("http://localhost:8081/corretor/cpf/123",HttpMethod.GET,httpEntity, CorretorDTO.class)).thenReturn(new ResponseEntity<>(corretorDTO, HttpStatus.OK));
+        Mockito.lenient().when(restTemplate.exchange("http://localhost:8081/cliente/321", HttpMethod.GET,httpEntity,ClienteDTO.class)).thenReturn(new ResponseEntity<>(clienteDTO,HttpStatus.OK));
         Mockito.lenient().when(vendasRepository.save(Mockito.any(Venda.class))).thenReturn(venda);
 
-        Venda resp1 = vendasService.postVenda(vendaCreateDTO);
+        Venda resp1 = vendasService.postVenda(vendaCreateDTO, "100");
         Assertions.assertEquals(resp1.getImovelIdentifier(),"1");
     }
 

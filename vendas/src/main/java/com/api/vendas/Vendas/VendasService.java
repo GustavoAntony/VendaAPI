@@ -2,6 +2,9 @@ package com.api.vendas.Vendas;
 
 import com.api.vendas.Vendas.exception.ImovelNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -13,6 +16,7 @@ public class VendasService {
 
     @Autowired
     private RestTemplate restTemplate;
+
     @Autowired
     private VendasRepository vendasRepository;
 
@@ -38,14 +42,22 @@ public class VendasService {
     }
 
 
-    public Venda postVenda(VendaCreateDTO vendaCreateDTO){
+    public Venda postVenda(VendaCreateDTO vendaCreateDTO, String token){
 
         Venda venda = new Venda();
 
+
         venda.setVendaStatus("SUCESSO");
 
-        ResponseEntity<ImoveisDTO> responseImoveis =
-                restTemplate.getForEntity("http://localhost:8081/imoveis/" + vendaCreateDTO.getIdenifierImovel(), ImoveisDTO.class);
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add("token", token);
+
+
+        HttpEntity httpEntity = new HttpEntity<>(headers);
+
+
+        ResponseEntity<ImoveisDTO> responseImoveis =  restTemplate.exchange("http://localhost:8081/imoveis/" + vendaCreateDTO.getIdenifierImovel(),HttpMethod.GET,httpEntity, ImoveisDTO.class);
         if (!responseImoveis.getStatusCode().is2xxSuccessful()) {
             venda.setVendaStatus("ERRO");
             throw new ImovelNotFoundException();
@@ -54,15 +66,16 @@ public class VendasService {
         venda.setImovelIdentifier(responseImoveis.getBody().getIdentifier());
 
         ResponseEntity<CorretorDTO> responseCorretor =
-                restTemplate.getForEntity("http://localhost:8081/corretor/cpf/" + vendaCreateDTO.getCpfCorretor(), CorretorDTO.class);
+                restTemplate.exchange("http://localhost:8081/corretor/cpf/" + vendaCreateDTO.getCpfCorretor(),HttpMethod.GET, httpEntity, CorretorDTO.class);
         if (!responseCorretor.getStatusCode().is2xxSuccessful()) {
             venda.setVendaStatus("ERRO");
         }
 
         venda.setCpfCorretor(responseCorretor.getBody().getCpf());
 
+
         ResponseEntity<ClienteDTO> responseCliente =
-                restTemplate.getForEntity("http://localhost:8081/cliente/" + vendaCreateDTO.getCpfCliente(), ClienteDTO.class);
+                restTemplate.exchange("http://localhost:8081/cliente/" + vendaCreateDTO.getCpfCliente(),HttpMethod.GET, httpEntity, ClienteDTO.class);
         if(! responseCliente.getStatusCode().is2xxSuccessful()){
             venda.setVendaStatus("ERRO");
         }
