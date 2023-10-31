@@ -50,7 +50,7 @@ public class VendasServiceTests {
         Mockito.when(vendasRepository.findByCpfCorretor("123")).thenReturn(vendas);
         List<Venda> resp_correct = vendasService.getVendasByCpfCorretor("123");
         List<Venda> resp_wrong = vendasService.getVendasByCpfCorretor("456");
-        Assertions.assertEquals(resp_correct.get(0).getVendaStatus(), "SUCESS");
+        Assertions.assertEquals(resp_correct.get(0).getCpfCorretor(), "123");
         Assertions.assertEquals(resp_wrong.size(),0);
     }
 //
@@ -74,7 +74,7 @@ public class VendasServiceTests {
         Mockito.when(vendasRepository.findByVendaStatus("SUCESS")).thenReturn(vendas);
         List<Venda> resp_correct = vendasService.getVendasByStatus("SUCESS");
         List<Venda> resp_wrong = vendasService.getVendasByStatus("ERROR");
-        Assertions.assertEquals(resp_correct.get(0).getVendaStatus(), "SUCESS");
+        Assertions.assertEquals(resp_correct.get(0).getId(), "1");
         Assertions.assertEquals(resp_wrong.size(),0);
     }
     @Test
@@ -102,7 +102,7 @@ public class VendasServiceTests {
 
     private Venda create_venda(){
         Venda venda = new Venda();
-        venda.setId(null);
+        venda.setId("1");
         venda.setImovelIdentifier("1");
         venda.setCpfCorretor("123");
         venda.setCpfCliente("321");

@@ -8,7 +8,7 @@ vendas,com.api.vendas.Vendas,VendaControllerAdvice,51,3,0,0,15,1,3,1,3,1
 vendas,com.api.vendas.Vendas,VendasController,24,3,0,0,5,1,5,1,5,1
 vendas,com.api.vendas.Vendas,ClienteDTO,0,10,0,0,0,3,0,3,0,3
 vendas,com.api.vendas.Vendas,VendasService,13,95,3,3,4,20,3,6,0,6
-vendas,com.api.vendas.Vendas,Venda,6,32,0,0,2,5,2,9,2,9
+vendas,com.api.vendas.Vendas,Venda,0,38,0,0,0,7,0,11,0,11
 vendas,com.api.vendas.Vendas,VendasControllerAdvice,17,3,0,0,5,1,1,1,1,1
 vendas,com.api.vendas.Vendas,VendaCreateDTO,0,24,0,0,0,5,0,7,0,7
 vendas,com.api.vendas.Vendas.exception,CorretorNotFoundException,4,0,0,0,1,0,1,0,1,0
