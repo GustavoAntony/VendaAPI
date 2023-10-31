@@ -17,7 +17,6 @@ public class VendasController {
         return vendasService.getVendas();
     }
 
-
 //    @RequestMapping("/{PropertyId}")
 //    public List<Venda> getVendasByPropertyId(@RequestParam String propertyId) { // Is DTO required?
 //        List<Venda> vendas = vendasService.getVendasByPropertyIdentifier(propertyId);

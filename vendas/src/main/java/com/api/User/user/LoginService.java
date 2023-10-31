@@ -1,6 +1,8 @@
 package com.api.User.user;
 
 import com.api.User.user.dto.ReturnUserDTO;
+import com.api.User.user.exception.TokenNotPassedException;
+import com.api.User.user.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -11,9 +13,12 @@ public class LoginService {
     private HashMap<String, ReturnUserDTO> cache = new HashMap<>();
 
     public ReturnUserDTO get(String token){
+        if (token == null){
+            throw new TokenNotPassedException();
+        }
         ReturnUserDTO user = get(token);
         if(user == null){
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException();
         }
 
         return user;

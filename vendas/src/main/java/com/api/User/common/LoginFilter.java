@@ -27,9 +27,6 @@ public class LoginFilter implements Filter {
 
         String token = req.getHeader("token");
 
-        System.out.println("avjhxvhjxvdjh");
-        System.out.println(token);
-
         try {
             vendaServiceCommon.validarUsuario(token);
             chain.doFilter(request, response);
