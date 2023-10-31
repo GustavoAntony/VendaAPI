@@ -14,7 +14,7 @@ import java.util.List;
 
     @GetMapping
     public List&lt;Venda&gt; getVendas(@RequestHeader String token) { // Is DTO required?
-<span class="nc" id="L17">        return vendasService.getVendas();</span>
+<span class="fc" id="L17">        return vendasService.getVendas();</span>
     }
 
 //    @RequestMapping(&quot;/{PropertyId}&quot;)
@@ -29,20 +29,20 @@ import java.util.List;
     @GetMapping
     @RequestMapping(&quot;/corretor&quot;)
     public List&lt;Venda&gt; getVendasByCorretorCpf(@RequestParam String corretorCpf, @RequestHeader String token) { // Is DTO required?
-<span class="nc" id="L32">        return vendasService.getVendasByCpfCorretor(corretorCpf);</span>
+<span class="fc" id="L32">        return vendasService.getVendasByCpfCorretor(corretorCpf);</span>
     }
 
     @GetMapping
     @RequestMapping(&quot;/cliente&quot;)
     public List&lt;Venda&gt; getVendasByClienteCpf(@RequestParam String clienteCpf, @RequestHeader String token) { // Is DTO required?
-<span class="nc" id="L38">        return vendasService.getVendasByCpfCliente(clienteCpf);</span>
+<span class="fc" id="L38">        return vendasService.getVendasByCpfCliente(clienteCpf);</span>
     }
 
     @GetMapping
     @RequestMapping(&quot;/status&quot;)
     public List&lt;Venda&gt; getVendasByStatus(@RequestParam String status, @RequestHeader String token) { // Is DTO required?
 
-<span class="nc" id="L45">            return vendasService.getVendasByStatus(status);</span>
+<span class="fc" id="L45">            return vendasService.getVendasByStatus(status);</span>
 
 
     }

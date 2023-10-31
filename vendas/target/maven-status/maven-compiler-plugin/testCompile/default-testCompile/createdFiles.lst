@@ -1,2 +1,3 @@
 com\api\vendas\VendasApplicationTests.class
 com\api\vendas\Vendas\VendasServiceTests.class
+com\api\vendas\Vendas\VendasControllerTest.class
