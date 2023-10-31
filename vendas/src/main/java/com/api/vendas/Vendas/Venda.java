@@ -12,8 +12,10 @@ import lombok.Setter;
 public class Venda {
     @Id
     private String id;
-    private String locatorCpf;
-    private String UserCpf;
-    private String propertyIdentifier;
-    private String status;
+    private String imovelIdentifier;
+    private String cpfCliente;
+    private String cpfCorretor;
+    private String vendaStatus;
+
+
 }

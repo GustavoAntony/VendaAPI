@@ -1,8 +1,6 @@
 package com.api.vendas.Vendas;
 
-import com.api.vendas.Vendas.Venda;
-import com.api.vendas.Vendas.VendasController;
-import com.api.vendas.Vendas.VendasService;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,16 +63,16 @@ public class VendasControllerTest {
     void test_listVendasByPropertyIdentifier_UmaVenda() throws Exception {
 
         Venda venda = new Venda();
-        venda.setPropertyIdentifier("123");
+        venda.setVendaStatus("VENDIDO");
 
         List<Venda> vendas = new ArrayList<>();
         vendas.add(venda);
 
-        Mockito.when(vendasService.getVendasByPropertyIdentifier("123")).thenReturn(vendas);
+        Mockito.when(vendasService.getVendasByStatus("VENDIDO")).thenReturn(vendas);
 
         MvcResult result = mockMvc
-                .perform(MockMvcRequestBuilders.get("/vendas/123")
-                .param("propertyIdentifier", "123"))
+                .perform(MockMvcRequestBuilders.get("/vendas/status")
+                .param("status", "VENDIDO"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
@@ -86,18 +84,18 @@ public class VendasControllerTest {
     }
 
     @Test
-    void test_listVendasByLocatorCpf_UmaVenda() throws Exception {
+    void test_listVendasByCorretorCpf_UmaVenda() throws Exception {
 
         Venda venda = new Venda();
-        String locatorCpf = venda.getLocatorCpf();
+        venda.setCpfCorretor("1234");
 
         List<Venda> vendas = new ArrayList<>();
         vendas.add(venda);
 
-        Mockito.when(vendasService.getVendasByLocatorCpf(locatorCpf)).thenReturn(vendas);
+        Mockito.when(vendasService.getVendasByCpfCorretor("1234")).thenReturn(vendas);
 
         MvcResult result = mockMvc
-                .perform(MockMvcRequestBuilders.get("/Locator/"+locatorCpf))
+                .perform(MockMvcRequestBuilders.get("/vendas/corretor").param("corretorCpf", "1234"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
