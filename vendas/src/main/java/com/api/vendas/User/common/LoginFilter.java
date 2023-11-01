@@ -3,6 +3,7 @@ package com.api.vendas.User.common;
 import com.api.vendas.User.user.dto.ReturnUserDTO;
 import com.api.vendas.User.user.exception.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -25,12 +26,16 @@ public class LoginFilter implements Filter {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<ReturnUserDTO> res = restTemplate.getForEntity("http://54.71.150.144:8082/token/" + token, ReturnUserDTO.class);
+        try{
 
-        if (res.getStatusCode().is2xxSuccessful()){
-            chain.doFilter(request, response);
-        } else {
-            throw new UserNotFoundException();
+            ResponseEntity<ReturnUserDTO> res = restTemplate.getForEntity("http://54.71.150.144:8082/token/" + token, ReturnUserDTO.class);
+            if (res.getStatusCode().is2xxSuccessful()){
+                chain.doFilter(request, response);
+            } else {
+                ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "O token informado é inválido");            }
+        }
+        catch(Exception e){
+            ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "O token informado é inválido");
         }
 
     }
