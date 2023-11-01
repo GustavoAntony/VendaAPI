@@ -57,16 +57,15 @@ public class VendasService {
         HttpEntity httpEntity = new HttpEntity<>(headers);
 
 
-        ResponseEntity<ImoveisDTO> responseImoveis =  restTemplate.exchange("http://localhost:8081/imoveis/" + vendaCreateDTO.getIdenifierImovel(),HttpMethod.GET,httpEntity, ImoveisDTO.class);
+        ResponseEntity<ImoveisDTO> responseImoveis =  restTemplate.exchange("http://3.134.139.76:8080/imovel/" + vendaCreateDTO.getIdenifierImovel(),HttpMethod.GET,httpEntity, ImoveisDTO.class);
         if (!responseImoveis.getStatusCode().is2xxSuccessful()) {
             venda.setVendaStatus("ERRO");
-            throw new ImovelNotFoundException();
         }
 
         venda.setImovelIdentifier(responseImoveis.getBody().getIdentifier());
 
         ResponseEntity<CorretorDTO> responseCorretor =
-                restTemplate.exchange("http://localhost:8081/corretor/cpf/" + vendaCreateDTO.getCpfCorretor(),HttpMethod.GET, httpEntity, CorretorDTO.class);
+                restTemplate.exchange("http://35.87.155.27:8080/corretor/cpf/" + vendaCreateDTO.getCpfCorretor(),HttpMethod.GET, httpEntity, CorretorDTO.class);
         if (!responseCorretor.getStatusCode().is2xxSuccessful()) {
             venda.setVendaStatus("ERRO");
         }
@@ -75,7 +74,7 @@ public class VendasService {
 
 
         ResponseEntity<ClienteDTO> responseCliente =
-                restTemplate.exchange("http://localhost:8081/cliente/" + vendaCreateDTO.getCpfCliente(),HttpMethod.GET, httpEntity, ClienteDTO.class);
+                restTemplate.exchange("http://34.210.87.17:8080/clientes/" + vendaCreateDTO.getCpfCliente(),HttpMethod.GET, httpEntity, ClienteDTO.class);
         if(! responseCliente.getStatusCode().is2xxSuccessful()){
             venda.setVendaStatus("ERRO");
         }
