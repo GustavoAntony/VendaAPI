@@ -157,7 +157,7 @@ public class VendasControllerTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(venda);
 
-        Mockito.when(vendasService.postVenda(ArgumentMatchers.eq(venda))).thenReturn(venda2);
+        Mockito.when(vendasService.postVenda(ArgumentMatchers.any(VendaCreateDTO.class))).thenReturn(venda2);
 
         MvcResult result = mockMvc
                 .perform(MockMvcRequestBuilders.post("/vendas").headers(headers)
