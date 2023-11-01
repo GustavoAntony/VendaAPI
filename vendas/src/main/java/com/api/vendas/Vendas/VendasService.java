@@ -56,29 +56,33 @@ public class VendasService {
 
         HttpEntity httpEntity = new HttpEntity<>(headers);
 
-
-        ResponseEntity<ImoveisDTO> responseImoveis =  restTemplate.exchange("http://3.134.139.76:8080/imovel/" + vendaCreateDTO.getIdenifierImovel(),HttpMethod.GET,httpEntity, ImoveisDTO.class);
-        if (!responseImoveis.getStatusCode().is2xxSuccessful()) {
+        try{
+            ResponseEntity<ImoveisDTO> responseImoveis =  restTemplate.exchange("http://3.134.139.76:8080/imovel/" + vendaCreateDTO.getIdenifierImovel(),HttpMethod.GET,httpEntity, ImoveisDTO.class);
+            venda.setImovelIdentifier(responseImoveis.getBody().getIdentifier());
+        }
+        catch (RuntimeException ex){
             venda.setVendaStatus("ERRO");
+            venda.setImovelIdentifier(vendaCreateDTO.getIdenifierImovel());
         }
 
-        venda.setImovelIdentifier(responseImoveis.getBody().getIdentifier());
-
-        ResponseEntity<CorretorDTO> responseCorretor =
-                restTemplate.exchange("http://35.87.155.27:8080/corretor/cpf/" + vendaCreateDTO.getCpfCorretor(),HttpMethod.GET, httpEntity, CorretorDTO.class);
-        if (!responseCorretor.getStatusCode().is2xxSuccessful()) {
+        try{
+            ResponseEntity<CorretorDTO> responseCorretor = restTemplate.exchange("http://35.87.155.27:8080/corretor/cpf/" + vendaCreateDTO.getCpfCorretor(),HttpMethod.GET, httpEntity, CorretorDTO.class);
+            venda.setCpfCorretor(responseCorretor.getBody().getCpf());
+        }
+        catch (RuntimeException ex){
             venda.setVendaStatus("ERRO");
+            venda.setCpfCorretor(vendaCreateDTO.getCpfCorretor());
         }
 
-        venda.setCpfCorretor(responseCorretor.getBody().getCpf());
 
-
-        ResponseEntity<ClienteDTO> responseCliente =
-                restTemplate.exchange("http://34.210.87.17:8080/clientes/" + vendaCreateDTO.getCpfCliente(),HttpMethod.GET, httpEntity, ClienteDTO.class);
-        if(! responseCliente.getStatusCode().is2xxSuccessful()){
-            venda.setVendaStatus("ERRO");
+        try{
+            ResponseEntity<ClienteDTO> responseCliente =
+                    restTemplate.exchange("http://34.210.87.17:8080/clientes/" + vendaCreateDTO.getCpfCliente(),HttpMethod.GET, httpEntity, ClienteDTO.class);
         }
-        venda.setCpfCliente(responseCliente.getBody().getCpf());
+        catch (RuntimeException ex){
+            venda.setVendaStatus("ERRO");
+            venda.setCpfCliente(vendaCreateDTO.getCpfCliente());
+        }
 
 
         return vendasRepository.save(venda);
