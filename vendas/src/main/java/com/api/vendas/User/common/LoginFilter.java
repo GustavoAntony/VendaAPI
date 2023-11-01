@@ -22,22 +22,28 @@ public class LoginFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
 
-        String token = req.getHeader("token");
+        if (req.getMethod().equals("OPTIONS")) {
+            chain.doFilter(request, response);
+        } else {
 
-        RestTemplate restTemplate = new RestTemplate();
 
-        try{
+            String token = req.getHeader("token");
 
-            ResponseEntity<ReturnUserDTO> res = restTemplate.getForEntity("http://54.71.150.144:8082/token/" + token, ReturnUserDTO.class);
-            if (res.getStatusCode().is2xxSuccessful()){
-                chain.doFilter(request, response);
-            } else {
-                ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "O token informado é inválido");            }
+            RestTemplate restTemplate = new RestTemplate();
+
+            try {
+
+                ResponseEntity<ReturnUserDTO> res = restTemplate.getForEntity("http://54.71.150.144:8082/token/" + token, ReturnUserDTO.class);
+                if (res.getStatusCode().is2xxSuccessful()) {
+                    chain.doFilter(request, response);
+                } else {
+                    ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "O token informado é inválido");
+                }
+            } catch (Exception e) {
+                ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "O token informado é inválido");
+            }
+
         }
-        catch(Exception e){
-            ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "O token informado é inválido");
-        }
-
     }
 
 }
