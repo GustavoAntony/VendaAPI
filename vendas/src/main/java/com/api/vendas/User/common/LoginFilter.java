@@ -34,15 +34,12 @@ public class LoginFilter implements Filter {
             try {
 
                 ResponseEntity<ReturnUserDTO> res = restTemplate.getForEntity("http://54.71.150.144:8082/token/" + token, ReturnUserDTO.class);
-                if (res.getStatusCode().is2xxSuccessful()) {
-                    chain.doFilter(request, response);
-                } else {
-                    ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "O token informado é inválido");
-                }
+                if (!res.getStatusCode().is2xxSuccessful()) {
+                    ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "O token informado é inválido");}
             } catch (Exception e) {
                 ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "O token informado é inválido");
             }
-
+            chain.doFilter(request, response);
         }
     }
 
