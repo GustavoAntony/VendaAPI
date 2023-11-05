@@ -80,6 +80,7 @@ public class VendasService {
                     restTemplate.exchange("http://34.210.87.17:8080/cliente/exists/" + vendaCreateDTO.getCpfCliente(),HttpMethod.GET, httpEntity, ClienteDTO.class);
             venda.setCpfCliente(responseCliente.getBody().getCpf());
 
+
         }
         catch (RuntimeException ex){
             venda.setVendaStatus("ERRO");
