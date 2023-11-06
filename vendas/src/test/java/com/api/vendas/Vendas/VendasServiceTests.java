@@ -84,7 +84,7 @@ public class VendasServiceTests {
         VendaCreateDTO vendaCreateDTO = new VendaCreateDTO();
         vendaCreateDTO.setCpfCliente("321");
         vendaCreateDTO.setCpfCorretor("123");
-        vendaCreateDTO.setIdenifierImovel("1");
+        vendaCreateDTO.setImovelIdentifier("1");
         ImoveisDTO imoveisDTO = new ImoveisDTO();
         imoveisDTO.setIdentifier("1");
         CorretorDTO corretorDTO = new CorretorDTO();
