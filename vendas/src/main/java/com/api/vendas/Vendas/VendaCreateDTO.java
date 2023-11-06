@@ -9,6 +9,6 @@ public class VendaCreateDTO {
 
     private String cpfCliente;
     private String cpfCorretor;
-    private String idenifierImovel;
+    private String imovelIdentifier;
 
 }

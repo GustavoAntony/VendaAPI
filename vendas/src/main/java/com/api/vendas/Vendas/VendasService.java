@@ -60,12 +60,12 @@ public class VendasService {
         HttpEntity httpEntity = new HttpEntity<>(headers);
 
         try{
-            ResponseEntity<ImoveisDTO> responseImoveis =  restTemplate.exchange("http://3.134.139.76:8080/imovel/" + vendaCreateDTO.getIdenifierImovel(),HttpMethod.GET,httpEntity, ImoveisDTO.class);
+            ResponseEntity<ImoveisDTO> responseImoveis =  restTemplate.exchange("http://3.134.139.76:8080/imovel/" + vendaCreateDTO.getImovelIdentifier(),HttpMethod.GET,httpEntity, ImoveisDTO.class);
             venda.setImovelIdentifier(responseImoveis.getBody().getIdentifier());
         }
         catch (RuntimeException ex){
             venda.setVendaStatus("ERRO");
-            venda.setImovelIdentifier(vendaCreateDTO.getIdenifierImovel());
+            venda.setImovelIdentifier(vendaCreateDTO.getImovelIdentifier());
         }
 
         try{
