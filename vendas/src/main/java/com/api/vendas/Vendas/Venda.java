@@ -1,5 +1,7 @@
 package com.api.vendas.Vendas;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,6 +18,7 @@ public class Venda {
     private String cpfCliente;
     private String cpfCorretor;
     private String vendaStatus;
+    private LocalDateTime data;
 
 
 }
